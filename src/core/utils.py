@@ -21,6 +21,15 @@ def read_file(path):
   except IOError:
     print(f"Ocorreu um erro ao ler o arquivo {path}.")
 
+
+def save_md_file(content, path):
+  timestamp = get_timestamp()
+  filename = f"arquivo_{timestamp}.md"
+  path_final = f"{path}/{filename}"
+
+  create_file(content=content, path=path_final)
+
+
 def create_file(content, path):
   # Obter o caminho do módulo que está chamando esta função
   caller_frame = inspect.stack()[1]

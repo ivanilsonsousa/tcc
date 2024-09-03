@@ -1,5 +1,5 @@
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Depends
-from ..core import Engine, make_documentation
+from ..core import Engine, make_documentation, save_md_file
 from ..dimensions import decomposicao_config, dimensions
 from pydantic import BaseModel
 from typing import Any, Dict, List
@@ -40,6 +40,8 @@ async def submit_challenge(
   evidences = params.evidences
 
   documentation = make_documentation(general_context=general_context)
+  save_md_file(content=documentation, path="./../../md/docs/")
+
   engine.inputs(code=code_text, documentation=documentation)
 
   response: Dict[str, Dict[str, Any]] = {}

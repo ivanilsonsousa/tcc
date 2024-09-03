@@ -1,5 +1,5 @@
 from dimensions.decomposicao import config as decomposicao_config
-from core import read_file, create_file, get_timestamp, make_documentation, Engine
+from core import read_file, save_md_file, make_documentation, Engine
 
 engine = Engine(dimension=decomposicao_config)
 
@@ -9,11 +9,7 @@ code = read_file(path='./../md/codigo.md')
 general_context = read_file(path='./../md/prompt/general_context.md')
 documentation = make_documentation(general_context=general_context)
 
-timestamp = get_timestamp()
-filename = f"arquivo_{timestamp}.md"
-path = f"./../md/docs/{filename}"
-
-create_file(content=documentation, path=path)
+save_md_file(content=documentation, path="./../md/docs/")
 
 engine.inputs(code=code, documentation=documentation)
 
