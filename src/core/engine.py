@@ -1,5 +1,5 @@
 from .ai import AI
-from .utils import get_timestamp, create_file
+from .utils import save_md_file
 
 class Engine:
   def __init__(self, dimension):
@@ -83,10 +83,6 @@ class Engine:
 
     output = completion.choices[0].message.content
     if save_output:
-      timestamp = get_timestamp()
-      filename = f"arquivo_{timestamp}.md"
-      path = f"./md/output/{filename}"
-
-      create_file(content=output, path=path)
+      save_md_file(content=output, path="./../../md/output/")
 
     return output
