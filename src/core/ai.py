@@ -1,5 +1,5 @@
-from open_ai import client, messages, MODEL
-from utils import read_file
+from .open_ai import client, messages, MODEL
+from .utils import read_file
 from enum import Enum
 
 class RoleType(Enum):

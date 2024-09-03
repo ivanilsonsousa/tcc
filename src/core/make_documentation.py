@@ -1,4 +1,4 @@
-from ai import AI
+from .ai import AI
 
 def make(general_context):
   ai = AI()
@@ -13,7 +13,7 @@ def make(general_context):
             a partir do contexto geral informado
             """
   ai.add_role(type="system", content=prompt)
-  ai.add_role_by_file(type="system", path_file="./md/prompt/teacher_documentation_scheme.md")
+  ai.add_role_by_file(type="system", path_file="./../../md/prompt/teacher_documentation_scheme.md")
 
   completion = ai.chat()
   documentation = completion.choices[0].message.content

@@ -1,4 +1,7 @@
-config = {
+from typing import Dict, Any
+
+config: Dict[str, Any] = {
+  "key": 2,
   "title": "Decomposição",
   "evidence": {
     "4": {
@@ -73,6 +76,80 @@ config = {
               - Ótimo: Estrutura hierárquica detalhada e bem definida. 
           """,
         }
+      }
+    },
+    "5": {
+      "title": "Utiliza-se da resolução dos sub-desafios para compor a solução final?",
+      "clue": {
+        "5.1": {
+          "title": "Chamadas a funções/métodos em uma sequência que demonstra a combinação dos sub-desafios.",
+          "detection": "Verificar a ordem e lógica das chamadas a funções/métodos no código principal, assegurando que eles são usados para compor a solução final.",
+          "output": """
+            1. Texto: "O aluno utilizou os sub-desafios para compor a solução final através de chamadas de funções/métodos." 
+
+            2. Trechos de Código: Destacar a sequência de chamadas de funções que compõem a solução final. 
+
+            3. Nota: 
+
+              - Não se aplica 
+
+              - Nenhum indício 
+
+              - Baixo: Chamadas a funções/métodos são desorganizadas. 
+
+              - Regular: Sequência básica de chamadas a funções/métodos. 
+
+              - Bom: Funções/métodos organizados em sequência lógica para compor a solução. 
+
+              - Ótimo: Funções/métodos compõem a solução de forma otimizada e clara. 
+          """,
+        },
+        "5.2": {
+          "title": "Integração de resultados de sub-desafios para formar a solução completa.",
+          "detection": "Identificar se as saídas de sub-desafios (funções/métodos) são utilizadas e integradas corretamente na solução final.",
+          "output": """
+            1. Texto: "O aluno integrou corretamente os resultados dos sub-desafios na solução final." 
+
+            2. Trechos de Código: Mostrar onde e como os resultados são integrados. 
+
+            3. Nota: 
+
+              - Não se aplica 
+
+              - Nenhum indício 
+
+              - Baixo: Integração fraca ou inconsistente dos sub-desafios. 
+
+              - Regular: Integração básica com algumas falhas. 
+
+              - Bom: Integração adequada, com boa coesão. 
+
+              - Ótimo: Integração impecável dos sub-desafios na solução final. 
+          """,
+        },
+        "5.3": {
+          "title": " Uso de estruturas de controle para coordenar a execução de sub-desafios (ex.: loops, condicionais).",
+          "detection": "Verificar se loops, condicionais, ou outras estruturas de controle são utilizadas para coordenar a execução e combinação de sub-desafios.",
+          "output": """
+            1. Texto: "O aluno utilizou estruturas de controle para coordenar a execução dos sub-desafios." 
+
+            2. Trechos de Código: Indicar as estruturas de controle que realizam essa coordenação. 
+
+            3. Nota: 
+
+              - Não se aplica 
+
+              - Nenhum indício 
+
+              - Baixo: Uso inadequado ou ausência de estruturas de controle. 
+
+              - Regular: Uso básico de estruturas de controle. 
+
+              - Bom: Estruturas de controle utilizadas de forma coerente. 
+
+              - Ótimo: Estruturas de controle otimizadas para coordenar sub-desafios. 
+          """,
+        },
       }
     }
   }
