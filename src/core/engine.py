@@ -1,5 +1,5 @@
-from ai import AI
-from utils import get_timestamp, create_file
+from .ai import AI
+from .utils import get_timestamp, create_file
 
 class Engine:
   def __init__(self, dimension):
@@ -74,10 +74,12 @@ class Engine:
     """
     self.ai.add_role(type="system", content=prompt)
 
-  def output(self, save_output=True):
+  def output(self, save_output=True, show_output=False):
     """Realiza a análise e mostra o resultado."""
     completion = self.ai.chat()
-    self.ai.show()
+
+    if show_output:
+      self.ai.show()
 
     output = completion.choices[0].message.content
     if save_output:
@@ -86,3 +88,5 @@ class Engine:
       path = f"./md/output/{filename}"
 
       create_file(content=output, path=path)
+
+    return output
