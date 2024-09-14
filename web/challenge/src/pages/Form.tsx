@@ -31,9 +31,6 @@ import { useNavigate } from 'react-router-dom';
 export function FormPage() {
   const navigate = useNavigate();
   const [data, setData] = useState(null); // Estado para armazenar dados
-  const [loading, setLoading] = useState(true); // Estado de loading
-  const [error, setError] = useState<any>(null); // Estado para erros
-  const [openItems, setOpenItems] = useState(["item-1", "item-2", "item-3"]);
   const [dimensionsList, setDimensionsList] = useState<any>({});
 
   const formSchema = z.object({
@@ -60,24 +57,22 @@ export function FormPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await api.get("/evidences");
+      const response = await api.get("/evidences", {
+        headers: {
+          showLoader: false,
+        }
+      });
 
-        console.log("response", response.data);
+      console.log("response", response.data);
 
-        setData(response.data);
-      } catch (err) {
-        setError("Erro ao buscar dados");
-      } finally {
-        setLoading(false);
-      }
+      setData(response.data);
     };
 
-    fetchData(); // Executa a função assíncrona
+    fetchData();
   }, []);
 
   const handleValueCheckboxListChange = (value: any) => {
-    console.log("componente pai", value);
+    console.log("handleValueCheckboxListChange::", value);
     setDimensionsList(value);
   };
 
@@ -102,12 +97,10 @@ export function FormPage() {
     const output = formatOutput(result.output);
 
     navigate("/result", { state: output });
-
-    console.log("output", output);
   }
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-slate-500">
+    <div className="w-screen min-h-screen flex items-center justify-center bg-slate-500">
       <Card className="w-[600px]">
         <CardHeader>
           <CardTitle>Analisador de Desafios</CardTitle>
@@ -155,6 +148,7 @@ export function FormPage() {
 
               <div className="mt-2">
                 <NestedCheckboxList
+                  data={data}
                   onValueChange={handleValueCheckboxListChange}
                 />
               </div>
