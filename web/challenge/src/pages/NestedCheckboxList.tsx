@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox"; // Checkbox do ShadCN UI
+import { Checkbox } from "@/components/ui/checkbox";
+import SkeletonNestedCheckboxList from "@/components/custom/SkeletonNestedCheckboxList";
 
 interface Clue {
   title: string;
@@ -26,65 +27,6 @@ interface TransformResult {
     [key: string]: Dimension;
   };
 }
-
-// Dados estruturados conforme o exemplo fornecido
-const data: TransformResult = {
-  dimensions: {
-    "2": {
-      key: 2,
-      title: "Decomposição",
-      evidences: {
-        "4": {
-          title: "O desafio foi dividido em sub-desafios?",
-          clues: {
-            "4.1": {
-              title:
-                "Identificação de funções ou métodos separados, verificação se cada um resolve uma parte específica do problema.",
-              detection:
-                "Analisar se o código contém funções/métodos independentes, cada um com um nome que sugere uma responsabilidade específica, alinhada com a divisão do problema em partes menores.",
-            },
-            "4.2": {
-              title:
-                "Comentários no código que descrevem a lógica de divisão em sub-desafios.",
-              detection:
-                "Procurar comentários no código que expliquem como cada parte do código se relaciona com um sub-desafio específico.",
-            },
-            "4.3": {
-              title:
-                "Estrutura hierárquica do código (ex.: uso de classes, módulos) para organizar os sub-desafios.",
-              detection:
-                "Analisar a estrutura do código, verificando se há uma organização clara em módulos ou classes que representem sub-desafios maiores ou agrupamentos de sub-desafios menores.",
-            },
-          },
-        },
-        "5": {
-          title:
-            "Utiliza-se da resolução dos sub-desafios para compor a solução final?",
-          clues: {
-            "5.1": {
-              title:
-                "Chamadas a funções/métodos em uma sequência que demonstra a combinação dos sub-desafios.",
-              detection:
-                "Verificar a ordem e lógica das chamadas a funções/métodos no código principal, assegurando que eles são usados para compor a solução final.",
-            },
-            "5.2": {
-              title:
-                "Integração de resultados de sub-desafios para formar a solução completa.",
-              detection:
-                "Identificar se as saídas de sub-desafios (funções/métodos) são utilizadas e integradas corretamente na solução final.",
-            },
-            "5.3": {
-              title:
-                " Uso de estruturas de controle para coordenar a execução de sub-desafios (ex.: loops, condicionais).",
-              detection:
-                "Verificar se loops, condicionais, ou outras estruturas de controle são utilizadas para coordenar a execução e combinação de sub-desafios.",
-            },
-          },
-        },
-      },
-    },
-  },
-};
 
 const transformStructure = (data: {
   [key: string]: boolean;
@@ -147,7 +89,9 @@ const transformStructure = (data: {
   return result;
 };
 
-const getDadosFormatados = (data: TransformResult) => {
+const getDadosFormatados = (data: TransformResult | null) => {
+  if (data === null) return {};
+
   const items: { [key: string]: boolean } = {};
 
   Object.keys(data.dimensions).forEach((dimensionKey) => {
@@ -238,22 +182,22 @@ function updateNodeState(
 }
 
 type Props = {
+  data: TransformResult | null;
   onValueChange: (value: TransformResult) => void;
 };
 
 // Função principal do componente
-const NestedCheckboxList: React.FC<Props> = ({ onValueChange }) => {
+const NestedCheckboxList: React.FC<Props> = ({ data, onValueChange }) => {
   const [baseItems, setBaseItems] = useState<{ [key: string]: boolean }>({});
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
     {}
   );
 
   useEffect(() => {
-    console.log("useEffect::list");
     const itemsBase = getDadosFormatados(data);
 
     setBaseItems(itemsBase);
-  }, []);
+  }, [data]);
 
   const handleUpdateNodeState = (key: string, isChecked: boolean, old: any) => {
     const itemsBase = baseItems;
@@ -272,10 +216,11 @@ const NestedCheckboxList: React.FC<Props> = ({ onValueChange }) => {
     onValueChange(transformedData);
   };
 
-  // console.log("data.dimensions", data.dimensions);
-
-  // Função para renderizar o conteúdo
   const renderList = () => {
+    if (data === null) {
+      return <SkeletonNestedCheckboxList />;
+    }
+
     return Object.keys(data.dimensions).map((dimensionKey) => {
       const dimension = data.dimensions[parseInt(dimensionKey)];
 

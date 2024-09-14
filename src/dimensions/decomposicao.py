@@ -3,10 +3,10 @@ from typing import Dict, Any
 config: Dict[str, Any] = {
   "key": 2,
   "title": "Decomposição",
-  "evidence": {
+  "evidences": {
     "4": {
       "title": "O desafio foi dividido em sub-desafios?",
-      "clue": {
+      "clues": {
         "4.1": {
           "title": "Identificação de funções ou métodos separados, verificação se cada um resolve uma parte específica do problema.",
           "detection": "Analisar se o código contém funções/métodos independentes, cada um com um nome que sugere uma responsabilidade específica, alinhada com a divisão do problema em partes menores. ",
@@ -80,7 +80,7 @@ config: Dict[str, Any] = {
     },
     "5": {
       "title": "Utiliza-se da resolução dos sub-desafios para compor a solução final?",
-      "clue": {
+      "clues": {
         "5.1": {
           "title": "Chamadas a funções/métodos em uma sequência que demonstra a combinação dos sub-desafios.",
           "detection": "Verificar a ordem e lógica das chamadas a funções/métodos no código principal, assegurando que eles são usados para compor a solução final.",

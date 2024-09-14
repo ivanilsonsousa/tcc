@@ -81,9 +81,7 @@ You can also render **raw HTML** inside Markdown:
 
 export function Result() {
   const location = useLocation();
-  const output = location.state || ''; // Extrai os dados enviados
-
-  console.log("Result::output", output);
+  const output = location.state || '';
 
   return (
   <div

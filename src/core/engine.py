@@ -47,7 +47,7 @@ class Engine:
 
   def set_evidence(self, evidence_key):
     """Define a evidência atual e reseta as mensagens anteriores."""
-    self.evidence = self.dimension['evidence'].get(evidence_key)
+    self.evidence = self.dimension['evidences'].get(evidence_key)
     if not self.evidence:
       raise ValueError(f"Evidência com a chave '{evidence_key}' não encontrada.")
     self.__reset_ai_except_context()
@@ -57,7 +57,7 @@ class Engine:
     if not self.evidence:
       raise ValueError("Nenhuma evidência foi definida. Use 'set_evidence' primeiro.")
     
-    clue = self.evidence['clue'].get(clue_key)
+    clue = self.evidence['clues'].get(clue_key)
     if not clue:
       raise ValueError(f"Indício com a chave '{clue_key}' não encontrado na evidência '{self.evidence['title']}'.")
 

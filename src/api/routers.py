@@ -7,7 +7,6 @@ import json
 
 router = APIRouter()
 
-# Modelo para os dados de evidências
 class Clue(BaseModel):
   key: str
 
@@ -19,12 +18,11 @@ class Dimension(BaseModel):
   key: int
   evidences: List[Evidence]
 
-# Dependência personalizada para carregar e validar o JSON
 def parse_dimensions(dimensions: str = Form(...)) -> List[Dimension]:
   try:
-    dimensions_list = json.loads(dimensions)  # Converte a string JSON para um dict
+    dimensions_list = json.loads(dimensions)
 
-    return [Dimension(**dimension) for dimension in dimensions_list]  # Converte cada dict para um objeto Dimension
+    return [Dimension(**dimension) for dimension in dimensions_list]
   except json.JSONDecodeError:
     raise HTTPException(status_code=400, detail="Invalid JSON format in dimensions")
   except ValueError as e:
