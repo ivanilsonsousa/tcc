@@ -1,32 +1,7 @@
 import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import SkeletonNestedCheckboxList from "@/components/custom/SkeletonNestedCheckboxList";
-
-interface Clue {
-  title: string;
-  detection: string;
-}
-
-interface Evidence {
-  title: string;
-  clues: {
-    [key: string]: Clue;
-  };
-}
-
-interface Dimension {
-  key: number;
-  title: string;
-  evidences: {
-    [key: string]: Evidence;
-  };
-}
-
-interface TransformResult {
-  dimensions: {
-    [key: string]: Dimension;
-  };
-}
+import { Evidence, TransformResult } from "@/types";
 
 const transformStructure = (data: {
   [key: string]: boolean;
@@ -189,9 +164,7 @@ type Props = {
 // Função principal do componente
 const NestedCheckboxList: React.FC<Props> = ({ data, onValueChange }) => {
   const [baseItems, setBaseItems] = useState<{ [key: string]: boolean }>({});
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
-    {}
-  );
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     const itemsBase = getDadosFormatados(data);
