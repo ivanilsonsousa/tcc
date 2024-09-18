@@ -61,3 +61,14 @@ export const formatOutput = (data: any) => {
   return result;
 };
 
+export const bytesFormat = (bytes: number): string => {
+  const sizes: string[] = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  
+  if (bytes === 0) return "0 Bytes";
+
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+
+  const value = bytes / Math.pow(1024, i);
+
+  return value.toFixed(2) + " " + sizes[i];
+};

@@ -30,7 +30,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function FormPage() {
   const navigate = useNavigate();
-  const [data, setData] = useState(null); // Estado para armazenar dados
+  const [data, setData] = useState(null);
   const [dimensionsList, setDimensionsList] = useState<any>({});
 
   const formSchema = z.object({
