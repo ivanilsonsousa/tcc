@@ -35,32 +35,37 @@ async def submit_challenge(
   files: List[UploadFile] = File(...),  # Aceita múltiplos arquivos
   dimensions: List[Dimension] = Depends(parse_dimensions),  # Usando 'dimensions' ao invés de 'params'
 ):
-
-  for idx, file in enumerate(files):
-    code_content = await file.read()
-    code_text = code_content.decode('utf-8')
-
-  engine = Engine(dimension=decomposicao_config)
-  documentation = make_documentation(general_context=general_context)
-  save_md_file(content=documentation, path="./../../md/docs/")
-
-  engine.inputs(code=code_text, documentation=documentation)
-
-  response: Dict[str, Dict[str, Any]] = {}
   
-  for dimension in dimensions:
-    for evidence in dimension.evidences:
-      engine.set_evidence(evidence_key=evidence.key)
-      response[evidence.key] = {}
+  try:
 
-      for clue in evidence.clues:
-        engine.set_clue(clue_key=clue.key)
-        output = engine.output()
+    for idx, file in enumerate(files):
+      code_content = await file.read()
+      code_text = code_content.decode('utf-8')
 
-        detail = {}
-        detail['output'] = output
+    engine = Engine(dimension=decomposicao_config)
+    documentation = make_documentation(general_context=general_context)
+    save_md_file(content=documentation, path="./../../md/docs/")
 
-        response[evidence.key][clue.key] = detail
+    engine.inputs(code=code_text, documentation=documentation)
+
+    response: Dict[str, Dict[str, Any]] = {}
+    
+    for dimension in dimensions:
+      for evidence in dimension.evidences:
+        engine.set_evidence(evidence_key=evidence.key)
+        response[evidence.key] = {}
+
+        for clue in evidence.clues:
+          engine.set_clue(clue_key=clue.key)
+          output = engine.output()
+
+          detail = {}
+          detail['output'] = output
+
+          response[evidence.key][clue.key] = detail
+
+  except Exception as e:
+    raise HTTPException(status_code=422, detail=str(e))
 
   return {
     "output": response,
