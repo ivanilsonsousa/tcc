@@ -9,8 +9,8 @@ class RoleType(Enum):
 class AI:
   def __init__(self):
     self.client = client
-    self.base_messages = messages
-    self.messages = messages
+    self.base_messages = messages.copy()
+    self.messages = messages.copy()
     self.completion = ""
 
   def add_role(self, type, content):
@@ -30,7 +30,7 @@ class AI:
     return self.completion
 
   def reset_messages(self):
-    self.messages = self.base_messages
+    self.messages = self.base_messages.copy()
 
   def show(self):
     for choice in self.completion.choices:

@@ -13,12 +13,15 @@ class Engine:
   def __reset_ai_except_context(self):
     """Reseta as mensagens na instância da IA, mantendo o contexto relevante."""
     self.ai.reset_messages()
+
+    if self.dimension:
+      self.__set_dimension(self.dimension)
+    if self.evidence:
+      self.__set_evidence(self.evidence)
     if self.code:
       self.__set_code(self.code)
     if self.documentation:
       self.__set_documentation(self.documentation)
-    if self.evidence:
-      self.__set_evidence(self.evidence)
 
   def __set_code(self, code):
     self.code = code
@@ -36,6 +39,12 @@ class Engine:
     self.evidence = evidence
 
     prompt = f"Evidência: {self.evidence['title']}"
+    self.ai.add_role(type="system", content=prompt)
+  
+  def __set_dimension(self, dimension):
+    self.dimension = dimension
+
+    prompt = f'Análise da Dimensão {dimension["title"]}'
     self.ai.add_role(type="system", content=prompt)
 
   def inputs(self, code, documentation):
@@ -71,8 +80,7 @@ class Engine:
   def set_dimension(self, dimension):
     self.dimension = dimension
 
-    prompt = f'Análise da Dimensão {dimension["title"]}'
-    self.ai.add_role(type="system", content=prompt)
+    self.__reset_ai_except_context()
 
   def set_evidence(self, evidence_key):
     """Define a evidência atual e reseta as mensagens anteriores."""
