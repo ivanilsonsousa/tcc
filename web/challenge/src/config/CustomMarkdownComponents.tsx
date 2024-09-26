@@ -1,4 +1,5 @@
-// src/CustomMarkdownComponents.tsx
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 import type { Element } from 'hast';
 
 type ExtraProps = { node?: Element };
@@ -27,21 +28,25 @@ export const CustomMarkdownComponents: Components = {
     </h3>
   ),
   p: ({ children, ...props }) => (
-    <p className="text-base mb-4" {...props}>
+    <div className="text-base mb-4" {...props}>
       {children}
-    </p>
+    </div>
   ),
-  code: ({ children, ...props }) => (
-    <code className="bg-gray-800 text-white rounded p-1" {...props}>
-      {children}
-    </code>
+  code: ({ children, className, ...props }) => (
+    <ScrollArea orientation='horizontal' className='bg-transparent rounded-lg mb-5' >
+      <code
+        className={cn(className)}
+        {...props}
+      >
+        {children}
+      </code>
+    </ScrollArea>
   ),
   input: ({ type, ...props }) => {
     if (type === 'checkbox') {
       return (
         <input
           type="checkbox"
-          //   className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
           {...props}
         />
       );

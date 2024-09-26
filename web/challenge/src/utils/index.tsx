@@ -11,6 +11,10 @@ export const objectToFormData = (data: { [key: string]: any }): FormData => {
         for (let i = 0; i < value.length; i++) {
           formData.append(key, value[i]); // Adiciona o arquivo ao FormData
         }
+      } else if (Array.isArray(value) && value.every(item => item instanceof File)) {
+        value.forEach(file => {
+          formData.append(key, file); // Adiciona cada arquivo ao FormData
+        });
       } else if (typeof value === 'object' && value !== null) {
         // Se o valor for um objeto, mas não FileList, converte para string JSON
         formData.append(key, JSON.stringify(value));

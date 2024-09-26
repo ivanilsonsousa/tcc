@@ -1,24 +1,12 @@
 import { useLoading } from '@/context/LoadingContext';
+import { LoadingTower } from './Loading/Tower';
 
 const LoadingOverlay = () => {
-  const { isLoading, customMessage } = useLoading();
+  const { isLoading, customElementLoading } = useLoading();
 
   if (!isLoading) return null;
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-white p-4 rounded-md shadow-lg">
-        {customMessage ? (
-          customMessage
-        ) : (
-          <div className="flex items-center">
-            <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-500"></div>
-            <span className="ml-2 text-xl">Loading...</span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  return (<LoadingTower />);
 };
 
 export default LoadingOverlay;

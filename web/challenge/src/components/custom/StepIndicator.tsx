@@ -12,7 +12,7 @@ interface StepIndicatorProps {
 
 const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep, steps }) => {
   return (
-    <ol className="flex flex-col lg:flex-row items-center w-full space-y-4 lg:space-x-8 lg:space-y-0">
+    <ol className="flex flex-col lg:flex-row items-justify w-full space-y-4 lg:space-x-8 lg:space-y-0">
       {steps.map((step, index) => {
         const stepNumber = index + 1;
         const isActive = stepNumber === currentStep;

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Depends
 from ..core import Engine, make_documentation, save_md_file
-from ..dimensions import decomposicao_config, dimensions
+from ..dimensions import dimensions as base_dimensions
 from pydantic import BaseModel
-from typing import Any, Dict, List
+from typing import List
 import json
 
 router = APIRouter()
@@ -42,33 +42,46 @@ async def submit_challenge(
       code_content = await file.read()
       code_text = code_content.decode('utf-8')
 
-    engine = Engine(dimension=decomposicao_config)
     documentation = make_documentation(general_context=general_context)
     save_md_file(content=documentation, path="./../../md/docs/")
 
+    engine = Engine()
     engine.inputs(code=code_text, documentation=documentation)
 
-    response: Dict[str, Dict[str, Any]] = {}
-    
+    response = []
+  
     for dimension in dimensions:
+      dimension_config = base_dimensions[str(dimension.key)]
+      engine.set_dimension(dimension=dimension_config)
+
+      dimension_item = engine.get_dimension()
+      dimension_item['evidences'] = []
+
       for evidence in dimension.evidences:
         engine.set_evidence(evidence_key=evidence.key)
-        response[evidence.key] = {}
+
+        evidence_item = engine.get_evidence(evidence_key=evidence.key)
+        evidence_item['clues'] = []
 
         for clue in evidence.clues:
           engine.set_clue(clue_key=clue.key)
           output = engine.output()
+          # output = "mocking data..."
 
-          detail = {}
-          detail['output'] = output
+          clue_item = engine.get_clue(clue_key=clue.key)
+          clue_item['output'] = output
 
-          response[evidence.key][clue.key] = detail
+          evidence_item['clues'].append(clue_item)
+        
+        dimension_item['evidences'].append(evidence_item)
+
+      response.append(dimension_item)
 
   except Exception as e:
     raise HTTPException(status_code=422, detail=str(e))
 
   return {
-    "output": response,
+    'output': response,
   }
 
 
@@ -77,5 +90,5 @@ async def submit_challenge(
 async def get_evidences():
 
   return {
-    "dimensions": dimensions,
+    "dimensions": base_dimensions,
   }

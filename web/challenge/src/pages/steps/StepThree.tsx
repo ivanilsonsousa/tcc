@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { stepThreeSchema, StepThreeData, CombinedFormData } from './validationSchemas';
+import { FiInfo } from 'react-icons/fi';
+import { Button } from '@/components/ui/button';
 import {
-  stepThreeSchema,
-  StepThreeData,
-  CombinedFormData,
-} from "./validationSchemas";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import NestedCheckboxList from "../NestedCheckboxList";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { FiHelpCircle } from "react-icons/fi";
-import api from "@/api";
-import ComponentePersonalizado from "../ComponentePersonalizado";
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import FileUpload from '@/components/custom/FileUpload';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface StepThreeProps {
   prevStep: () => void;
@@ -24,84 +25,56 @@ interface StepThreeProps {
 const StepThree: React.FC<StepThreeProps> = ({ prevStep, nextStep, formData, setFormData }) => {
   const form = useForm<StepThreeData>({
     resolver: zodResolver(stepThreeSchema),
-    defaultValues: {},
-    mode: "onChange",
+    defaultValues: {
+      files: formData.files || undefined,
+    },
+    mode: 'onChange',
   });
-  const [data, setData] = useState(null); // Estado para armazenar dados
-  const [dimensionsList, setDimensionsList] = useState<any>({});
 
   const onSubmit = (data: StepThreeData) => {
     setFormData(data);
     nextStep();
   };
 
-  const { errors } = form.formState;
-
-  useEffect(() => {
-    console.log("errors", errors);
-  }, [errors]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await api.get("/evidences", {
-        headers: {
-          showLoader: false,
-        }
-      });
-
-      console.log("response", response.data);
-
-      setData(response.data);
-    };
-
-    fetchData();
-  }, []);
-
-  const handleValueCheckboxListChange = (value: any) => {
-    console.log("handleValueCheckboxListChange::", value);
-    setDimensionsList(value);
-  };
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
         <Alert className='mb-5' >
-          <FiHelpCircle className="h-4 w-4" />
-          <AlertTitle>Sobre</AlertTitle>
+          <FiInfo className="h-4 w-4" />
+          <AlertTitle>Aviso!</AlertTitle>
           <AlertDescription>
-            Escolha dentre as opções de análise para o desafio submetido
+            No momento só são aceitos códigos escritos em python 👨‍💻🐍
           </AlertDescription>
         </Alert>
 
-        <div className="mt-2">
-          {/* <NestedCheckboxList
-            data={data}
-            onValueChange={handleValueCheckboxListChange}
-          /> */}
-
-          <FormField
-            control={form.control}
-            name="personalizado.valido"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Componente Personalizado</FormLabel>
-                <FormControl>
-                  {/* <NestedCheckboxList
-                    data={data}
-                    onValueChange={handleValueCheckboxListChange}
-                    {...field}
-                  /> */}
-                  <ComponentePersonalizado {...field} />
-                </FormControl>
-                <FormDescription>Componente Personalizado</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="files"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Envio do Código</FormLabel>
+              <FormControl>
+                <FileUpload
+                  value={field.value}
+                  onChange={field.onChange}
+                  accept={{ 'text/x-python': ['.py'] }}
+                  multiple={false}
+                  maxSize={5242880}
+                  name="files"
+                />
+              </FormControl>
+              <FormDescription>Envie um arquivo .py</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <div className="flex justify-between mt-10">
-          <Button type="button" onClick={prevStep} variant={"secondary"}>
+          <Button
+            type="button"
+            onClick={prevStep}
+            variant={'secondary'}
+          >
             Voltar
           </Button>
           <Button type="submit">Próximo</Button>

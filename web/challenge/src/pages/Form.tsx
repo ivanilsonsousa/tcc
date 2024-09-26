@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -15,23 +16,22 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
 import api from "@/api";
-import NestedCheckboxList from "./NestedCheckboxList";
+import NestedCheckboxList from "@/components/custom/NestedCheckboxList";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { formatOutput, objectToFormData } from "@/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
+import { z } from "zod";
+import { IDimensionsList } from "@/types";
 
 export function FormPage() {
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
-  const [dimensionsList, setDimensionsList] = useState<any>({});
+  const [dimensionsList, setDimensionsList] = useState<IDimensionsList | {}>({});
 
   const formSchema = z.object({
     general_context: z
@@ -54,22 +54,6 @@ export function FormPage() {
       files: undefined,
     },
   });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await api.get("/evidences", {
-        headers: {
-          showLoader: false,
-        }
-      });
-
-      console.log("response", response.data);
-
-      setData(response.data);
-    };
-
-    fetchData();
-  }, []);
 
   const handleValueCheckboxListChange = (value: any) => {
     console.log("handleValueCheckboxListChange::", value);
@@ -97,7 +81,7 @@ export function FormPage() {
     const output = formatOutput(result.output);
 
     navigate("/result", { state: output });
-  }
+  };
 
   return (
     <div className="w-screen min-h-screen flex items-center justify-center bg-slate-500">
@@ -148,7 +132,6 @@ export function FormPage() {
 
               <div className="mt-2">
                 <NestedCheckboxList
-                  data={data}
                   onValueChange={handleValueCheckboxListChange}
                 />
               </div>

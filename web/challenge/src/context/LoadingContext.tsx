@@ -2,9 +2,9 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LoadingContextProps {
   isLoading: boolean;
-  showLoading: (customMessage?: ReactNode) => void;
+  showLoading: (customElementLoading?: ReactNode) => void;
   hideLoading: () => void;
-  customMessage: ReactNode | null;
+  customElementLoading: ReactNode | null;
 }
 
 const LoadingContext = createContext<LoadingContextProps | undefined>(undefined);
@@ -19,20 +19,20 @@ export const useLoading = () => {
 
 export const LoadingProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [customMessage, setCustomMessage] = useState<ReactNode | null>(null);
+  const [customElementLoading, setCustomElementLoading] = useState<ReactNode | null>(null);
 
   const showLoading = (message?: ReactNode) => {
     setIsLoading(true);
-    setCustomMessage(message || null);
+    setCustomElementLoading(message || null);
   };
 
   const hideLoading = () => {
     setIsLoading(false);
-    setCustomMessage(null);
+    setCustomElementLoading(null);
   };
 
   return (
-    <LoadingContext.Provider value={{ isLoading, showLoading, hideLoading, customMessage }}>
+    <LoadingContext.Provider value={{ isLoading, showLoading, hideLoading, customElementLoading }}>
       {children}
     </LoadingContext.Provider>
   );
