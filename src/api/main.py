@@ -15,7 +15,7 @@ app.add_middleware(
 # Rota principal
 @app.get("/")
 def read_root():
-  return {"message": "Bem-vindo à API FastAPI!"}
+  return {"message": "Bem-vindo à API", "status": "ok"}
 
 app.include_router(router)
 
