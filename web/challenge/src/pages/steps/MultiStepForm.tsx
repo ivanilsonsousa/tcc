@@ -2,22 +2,21 @@ import { useState } from 'react';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import Confirm from './Confirm';
-import StepIndicator from './StepIndicator';
 import { CombinedFormData } from './validationSchemas';
 import StepThree from './StepThree';
+import StepIndicator from '@/components/custom/StepIndicator';
 
 const initialFormData: CombinedFormData = {
   general_context: `O pensamento computacional é uma habilidade essencial que permite resolver problemas de forma sistemática e eficiente, aplicando conceitos fundamentais da ciência da computação. Um dos desafios comuns para praticar essa habilidade é o cálculo de médias, uma operação simples, mas fundamental, que exige atenção aos detalhes e uma boa compreensão de como os dados devem ser manipulados e interpretados.
 
 Descrição do Desafio: Você é responsável por desenvolver um programa que calcule a média das notas de uma turma de alunos. Este programa deve receber como entrada as notas individuais de cada aluno e, em seguida, calcular e exibir a média da turma. Além disso, o programa deve indicar quantos alunos estão acima, abaixo e na média da turma.`,
   files: undefined,
-  nestedCheckboxes: {},
 };
 
 const steps = [
   { title: 'Contexto Geral', description: 'Descreva o Contexto Geral' },
-  { title: 'Envio do Código', description: 'Submeta o código criado' },
   { title: 'Dimensões', description: 'Escolha os itens a serem avaliados' },
+  { title: 'Envio do Código', description: 'Submeta o código criado' },
   { title: 'Confirmação', description: 'Confirme seus dados' },
 ];
 

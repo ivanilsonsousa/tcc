@@ -1,7 +1,7 @@
 from typing import Dict, Any
 
 config: Dict[str, Any] = {
-  "key": 2,
+  "key": "2",
   "title": "Decomposição",
   "evidences": {
     "4": {
@@ -9,7 +9,7 @@ config: Dict[str, Any] = {
       "clues": {
         "4.1": {
           "title": "Identificação de funções ou métodos separados, verificação se cada um resolve uma parte específica do problema.",
-          "detection": "Analisar se o código contém funções/métodos independentes, cada um com um nome que sugere uma responsabilidade específica, alinhada com a divisão do problema em partes menores. ",
+          "detection": "Analisar se o código contém funções/métodos independentes, cada um com um nome que sugere uma responsabilidade específica, alinhada com a divisão do problema em partes menores.",
           "output": """
             1. Texto: "O aluno utilizou funções para dividir o desafio em sub-desafios." (ou algo do gênero) 
 
@@ -18,15 +18,10 @@ config: Dict[str, Any] = {
             3. Nota: 
 
               - Não se aplica 
-
               - Nenhum indício
-
               - Baixo: Funções existem, mas não estão claramente divididas. 
-
               - Regular: Funções dividem o problema, mas há sobreposição ou falta de clareza. 
-
               - Bom: Funções dividem o problema adequadamente. 
-
               - Ótimo: Funções claramente dividem e solucionam partes específicas do desafio. 
           """,
         },
@@ -41,15 +36,10 @@ config: Dict[str, Any] = {
             3. Nota: 
 
               - Não se aplica 
-
               - Nenhum indício 
-
               - Baixo: Comentários existem, mas são genéricos. 
-
               - Regular: Comentários explicam partes, mas de forma superficial.
-
               - Bom: Comentários explicam a maioria dos sub-desafios. 
-
               - Ótimo: Comentários detalham claramente cada sub-desafio e sua função. 
           """,
         },
@@ -64,15 +54,10 @@ config: Dict[str, Any] = {
             3. Nota: 
 
               - Não se aplica 
-
               - Nenhum indício 
-
               - Baixo: Estrutura hierárquica pouco clara. 
-
               - Regular: Estrutura hierárquica básica e pouco detalhada. 
-
               - Bom: Estrutura hierárquica clara para a maioria dos sub-desafios. 
-
               - Ótimo: Estrutura hierárquica detalhada e bem definida. 
           """,
         }
@@ -92,15 +77,10 @@ config: Dict[str, Any] = {
             3. Nota: 
 
               - Não se aplica 
-
               - Nenhum indício 
-
               - Baixo: Chamadas a funções/métodos são desorganizadas. 
-
               - Regular: Sequência básica de chamadas a funções/métodos. 
-
               - Bom: Funções/métodos organizados em sequência lógica para compor a solução. 
-
               - Ótimo: Funções/métodos compõem a solução de forma otimizada e clara. 
           """,
         },
@@ -115,20 +95,15 @@ config: Dict[str, Any] = {
             3. Nota: 
 
               - Não se aplica 
-
               - Nenhum indício 
-
               - Baixo: Integração fraca ou inconsistente dos sub-desafios. 
-
               - Regular: Integração básica com algumas falhas. 
-
               - Bom: Integração adequada, com boa coesão. 
-
               - Ótimo: Integração impecável dos sub-desafios na solução final. 
           """,
         },
         "5.3": {
-          "title": " Uso de estruturas de controle para coordenar a execução de sub-desafios (ex.: loops, condicionais).",
+          "title": "Uso de estruturas de controle para coordenar a execução de sub-desafios (ex.: loops, condicionais).",
           "detection": "Verificar se loops, condicionais, ou outras estruturas de controle são utilizadas para coordenar a execução e combinação de sub-desafios.",
           "output": """
             1. Texto: "O aluno utilizou estruturas de controle para coordenar a execução dos sub-desafios." 
@@ -138,15 +113,10 @@ config: Dict[str, Any] = {
             3. Nota: 
 
               - Não se aplica 
-
-              - Nenhum indício 
-
+              - Nenhum indício
               - Baixo: Uso inadequado ou ausência de estruturas de controle. 
-
               - Regular: Uso básico de estruturas de controle. 
-
               - Bom: Estruturas de controle utilizadas de forma coerente. 
-
               - Ótimo: Estruturas de controle otimizadas para coordenar sub-desafios. 
           """,
         },

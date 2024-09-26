@@ -2,16 +2,13 @@ from .ai import AI
 from .utils import save_md_file
 
 class Engine:
-  def __init__(self, dimension):
+  def __init__(self):
     self.ai = AI()
-    self.dimension = dimension
+    self.dimension = None
     self.evidence = None  # Para armazenar a evidência atual
     self.clue = None  # Para armazenar o indício atual
     self.code = None  # Para armazenar o código do aluno
     self.documentation = None  # Para armazenar a documentação do professor
-
-    prompt = f'Análise da Dimensão {dimension["title"]}'
-    self.ai.add_role(type="system", content=prompt)
 
   def __reset_ai_except_context(self):
     """Reseta as mensagens na instância da IA, mantendo o contexto relevante."""
@@ -37,6 +34,7 @@ class Engine:
 
   def __set_evidence(self, evidence):
     self.evidence = evidence
+
     prompt = f"Evidência: {self.evidence['title']}"
     self.ai.add_role(type="system", content=prompt)
 
@@ -44,6 +42,37 @@ class Engine:
     """Método público para configurar o código e a documentação."""
     self.__set_code(code=code)
     self.__set_documentation(documentation=documentation)
+
+  def get_dimension(self):
+    item = {}
+    item["key"] = self.dimension["key"]
+    item["title"] = self.dimension["title"]
+    
+    return item
+  
+  def get_evidence(self, evidence_key):
+    evidence = self.dimension['evidences'].get(evidence_key)
+
+    item = {};
+    item["key"] = evidence_key
+    item["title"] = evidence["title"]
+    
+    return item
+
+  def get_clue(self, clue_key):
+    clue = self.evidence['clues'].get(clue_key)
+
+    item = {};
+    item["key"] = clue_key
+    item["title"] = clue["title"]
+
+    return item
+
+  def set_dimension(self, dimension):
+    self.dimension = dimension
+
+    prompt = f'Análise da Dimensão {dimension["title"]}'
+    self.ai.add_role(type="system", content=prompt)
 
   def set_evidence(self, evidence_key):
     """Define a evidência atual e reseta as mensagens anteriores."""
