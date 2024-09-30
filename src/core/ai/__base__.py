@@ -1,14 +1,3 @@
-import os
-from openai import OpenAI
-from dotenv import load_dotenv
-
-# Carrega as variáveis de ambiente do arquivo .env
-load_dotenv()
-
-# MODEL = 'gpt-3.5-turbo'
-MODEL = 'gpt-4o'
-API_KEY = os.getenv('OPENAI_API_KEY')
-
 prompt = """
 O contéudo se trata de uma verificação para avaliação do pensamento computacional
 A idéia é avaliar desafios propostos por professores a alunos
@@ -56,8 +45,4 @@ messages=[
   {"role": "system", "content": prompt},
 ]
 
-client = OpenAI(
-  api_key=API_KEY
-)
-
-__all__ = ['client', 'messages', 'MODEL']
+__all__ = ['messages']

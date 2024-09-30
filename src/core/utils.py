@@ -2,24 +2,27 @@ import os
 import datetime
 import inspect
 
-def read_file(path):
+def get_absolute_path(relative_path):
+  # Obter o frame do chamador
+  caller_frame = inspect.stack()[1]
+  # Obter o módulo do chamador
+  caller_module = inspect.getmodule(caller_frame[0])
+  # Diretório do chamador
+  base_dir = os.path.dirname(os.path.abspath(caller_module.__file__))
+  # Caminho absoluto
+  absolute_path = os.path.join(base_dir, relative_path)
+
+  return absolute_path
+
+def read_file(file_path):
   try:
-    # Obter o caminho absoluto do script que está chamando esta função
-    caller_frame = inspect.stack()[1]
-    caller_module = inspect.getmodule(caller_frame[0])
-    caller_path = os.path.abspath(os.path.dirname(caller_module.__file__))
-
-    # Combinar o caminho do chamador com o caminho fornecido
-    full_path = os.path.join(caller_path, path)
-
-    # Ler o arquivo
-    with open(full_path, 'r', encoding='utf-8') as file:
-      conteudo = file.read()
-      return conteudo
+    with open(file_path, 'r', encoding='utf-8') as file:
+      content = file.read()
+      return content
   except FileNotFoundError:
-    print(f"O arquivo {path} não foi encontrado.")
+    print(f"O arquivo {file_path} não foi encontrado.")
   except IOError:
-    print(f"Ocorreu um erro ao ler o arquivo {path}.")
+    print(f"Ocorreu um erro ao ler o arquivo {file_path}.")
 
 
 def save_md_file(content, path):
@@ -31,20 +34,21 @@ def save_md_file(content, path):
 
 
 def create_file(content, path):
-  # Obter o caminho do módulo que está chamando esta função
-  caller_frame = inspect.stack()[1]
-  caller_module = inspect.getmodule(caller_frame[0])
-  caller_path = os.path.abspath(os.path.dirname(caller_module.__file__))
+  try:
+    # Cria as pastas se elas não existirem
+    os.makedirs(os.path.dirname(path), exist_ok=True)
 
-  # Combinar o caminho do chamador com o caminho fornecido
-  full_path = os.path.join(caller_path, path)
-    
-  # Cria as pastas se elas não existirem
-  os.makedirs(os.path.dirname(full_path), exist_ok=True)
-    
-  # Cria e escreve o conteúdo no arquivo
-  with open(full_path, "w") as file:
-    file.write(content)
+    # Cria e escreve o conteúdo no arquivo
+    with open(path, "w", encoding='utf-8') as file:
+      file.write(content)
+  except PermissionError:
+    print(f"Permissão negada para escrever no arquivo {path}.")
+  except OSError as e:
+    print(f"Erro ao criar diretórios ou manipular o arquivo: {e}")
+  except IOError as e:
+    print(f"Ocorreu um erro de E/S ao escrever no arquivo {path}: {e}")
+  except Exception as e:
+    print(f"Ocorreu um erro inesperado: {e}")
 
 def get_timestamp():
   # Gera um timestamp atual no formato desejado
@@ -52,4 +56,4 @@ def get_timestamp():
 
   return timestamp
 
-__all__ = ['read_file', 'create_file', 'get_timestamp']
+__all__ = ['read_file', 'create_file', 'get_absolute_path', 'get_timestamp']
