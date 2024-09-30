@@ -1,5 +1,5 @@
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Depends
-from ..core import Engine, make_documentation, save_md_file
+from ..core import Engine, OpenaiModel, OllamaModel, save_md_file, get_absolute_path
 from ..dimensions import dimensions as base_dimensions
 from pydantic import BaseModel
 from typing import List
@@ -42,10 +42,14 @@ async def submit_challenge(
       code_content = await file.read()
       code_text = code_content.decode('utf-8')
 
-    documentation = make_documentation(general_context=general_context)
-    save_md_file(content=documentation, path="./../../md/docs/")
+    ai = OpenaiModel()
+    # ai = OllamaModel()
+    engine = Engine(ai)
+    
+    documentation = engine.make_documentation(general_context=general_context)
+    path_file = get_absolute_path("./../../md/docs/")
+    save_md_file(content=documentation, path=path_file)
 
-    engine = Engine()
     engine.inputs(code=code_text, documentation=documentation)
 
     response = []

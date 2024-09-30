@@ -1,125 +1,130 @@
-from .ai import AI
-from .utils import save_md_file
+from .ai.types.ai_interface import AIInterface
+from .utils import save_md_file, get_absolute_path
 
 class Engine:
-  def __init__(self):
-    self.ai = AI()
+  def __init__(self, ai: AIInterface):
+    self.ai = ai
     self.dimension = None
-    self.evidence = None  # Para armazenar a evidência atual
-    self.clue = None  # Para armazenar o indício atual
-    self.code = None  # Para armazenar o código do aluno
-    self.documentation = None  # Para armazenar a documentação do professor
+    self.evidence = None
+    self.clue = None
+    self.code = None
+    self.documentation = None
+    self.clue_key = None
 
-  def __reset_ai_except_context(self):
-    """Reseta as mensagens na instância da IA, mantendo o contexto relevante."""
+  def make_documentation(self, general_context) -> str:
     self.ai.reset_messages()
 
-    if self.dimension:
-      self.__set_dimension(self.dimension)
-    if self.evidence:
-      self.__set_evidence(self.evidence)
-    if self.code:
-      self.__set_code(self.code)
-    if self.documentation:
-      self.__set_documentation(self.documentation)
-
-  def __set_code(self, code):
-    self.code = code
-    prompt = "O código do aluno segue abaixo"
-    self.ai.add_role(type="system", content=prompt)
-    self.ai.add_role(type="system", content=code)
-
-  def __set_documentation(self, documentation):
-    self.documentation = documentation
-    prompt = "O documento do professor segue abaixo"
+    prompt = f"""
+              Contexto Geral:
+              {general_context}
+            """
     self.ai.add_role(type="user", content=prompt)
-    self.ai.add_role(type="user", content=documentation)
-
-  def __set_evidence(self, evidence):
-    self.evidence = evidence
-
-    prompt = f"Evidência: {self.evidence['title']}"
+    prompt = """
+              Gere um documento, baseado no modelo abaixo,
+              a partir do contexto geral informado
+              """
     self.ai.add_role(type="system", content=prompt)
-  
-  def __set_dimension(self, dimension):
-    self.dimension = dimension
 
-    prompt = f'Análise da Dimensão {dimension["title"]}'
-    self.ai.add_role(type="system", content=prompt)
+    path_file = get_absolute_path("./../../md/prompt/teacher_documentation_scheme.md")
+    self.ai.add_role_by_file(type="system", path_file=path_file)
+
+    documentation = self.ai.chat()
+    self.ai.reset_messages()
+
+    return documentation
+
+  def __update_ai_context(self):
+    self.ai.reset_messages()
+
+    if self.code:
+      prompt = "O código do aluno segue abaixo"
+      self.ai.add_role(type="system", content=prompt)
+      self.ai.add_role(type="system", content=self.code)
+
+    if self.documentation:
+      prompt = "O documento do professor segue abaixo"
+      self.ai.add_role(type="user", content=prompt)
+      self.ai.add_role(type="user", content=self.documentation)
+
+    if self.dimension:
+      prompt = f'Análise da Dimensão {self.dimension["title"]}'
+      self.ai.add_role(type="system", content=prompt)
+    
+    if self.evidence:
+      prompt = f"Evidência: {self.evidence['title']}"
+      self.ai.add_role(type="system", content=prompt)
+    
+    if self.clue:
+      clue = self.clue
+      clue_key = self.clue_key
+      prompt = f"""
+                Indício {clue_key}: {clue['title']}
+
+                Detecção: {clue['detection']}
+
+                Saídas: (O que me deve retornar EXATAMENTE OS CAMPOS ABAIXO)
+
+                {clue['output']}
+                """
+      self.ai.add_role(type="system", content=prompt)
 
   def inputs(self, code, documentation):
-    """Método público para configurar o código e a documentação."""
-    self.__set_code(code=code)
-    self.__set_documentation(documentation=documentation)
+    self.code = code
+    self.documentation = documentation
+    self.__update_ai_context()
 
   def get_dimension(self):
-    item = {}
-    item["key"] = self.dimension["key"]
-    item["title"] = self.dimension["title"]
-    
-    return item
+    return {
+      "key": self.dimension["key"],
+      "title": self.dimension["title"]
+    }
   
   def get_evidence(self, evidence_key):
     evidence = self.dimension['evidences'].get(evidence_key)
-
-    item = {};
-    item["key"] = evidence_key
-    item["title"] = evidence["title"]
-    
-    return item
+    return {
+      "key": evidence_key,
+      "title": evidence["title"]
+    }
 
   def get_clue(self, clue_key):
     clue = self.evidence['clues'].get(clue_key)
-
-    item = {};
-    item["key"] = clue_key
-    item["title"] = clue["title"]
-
-    return item
+    return {
+      "key": clue_key,
+      "title": clue["title"]
+    }
 
   def set_dimension(self, dimension):
     self.dimension = dimension
-
-    self.__reset_ai_except_context()
+    self.__update_ai_context()
 
   def set_evidence(self, evidence_key):
-    """Define a evidência atual e reseta as mensagens anteriores."""
     self.evidence = self.dimension['evidences'].get(evidence_key)
+
     if not self.evidence:
       raise ValueError(f"Evidência com a chave '{evidence_key}' não encontrada.")
-    self.__reset_ai_except_context()
+
+    self.__update_ai_context()
 
   def set_clue(self, clue_key):
-    """Define o indício atual, preservando o contexto relevante."""
     if not self.evidence:
       raise ValueError("Nenhuma evidência foi definida. Use 'set_evidence' primeiro.")
     
-    clue = self.evidence['clues'].get(clue_key)
-    if not clue:
+    self.clue = self.evidence['clues'].get(clue_key)
+
+    if not self.clue:
       raise ValueError(f"Indício com a chave '{clue_key}' não encontrado na evidência '{self.evidence['title']}'.")
-
-    self.__reset_ai_except_context()
-
-    prompt = f"""
-      Indício {clue_key}: {clue['title']}
-      
-      Detecção: {clue['detection']}
-
-      Saídas: (O que me deve retornar EXATAMENTE OS CAMPOS ABAIXO)
-
-      {clue['output']}
-    """
-    self.ai.add_role(type="system", content=prompt)
+    
+    self.clue_key = clue_key
+    self.__update_ai_context()
 
   def output(self, save_output=True, show_output=False):
-    """Realiza a análise e mostra o resultado."""
-    completion = self.ai.chat()
+    output = self.ai.chat()
 
     if show_output:
       self.ai.show()
 
-    output = completion.choices[0].message.content
     if save_output:
-      save_md_file(content=output, path="./../../md/output/")
+      path_file = get_absolute_path("./../../md/output/")
+      save_md_file(content=output, path=path_file)
 
     return output
