@@ -11,11 +11,11 @@ config: Dict[str, Any] = {
           "title": "O código apresenta uma sequência lógica de instruções para resolver o problema.",
           "detection": "Verificar se o código segue uma ordem coerente de passos, desde a entrada de dados até a solução final.",
           "output": """
-            1.Texto: "O aluno forneceu uma sequência lógica de instruções para resolver o desafio."
+            1. Texto: "O aluno forneceu uma sequência lógica de instruções para resolver o desafio."
             
-            2.Trechos de Código: Marcar as partes do código que demonstram a sequência de passos lógica.
+            2. Trechos de Código: Marcar as partes do código que demonstram a sequência de passos lógica.
             
-            3.Nota:
+            3. Nota:
 
               - Não se aplica
               - Nenhum indício
@@ -29,11 +29,11 @@ config: Dict[str, Any] = {
           "title": "O algoritmo cobre todas as etapas do problema, desde a inicialização até a finalização.",
           "detection": "Verificar se o código contempla todas as etapas necessárias para resolver o desafio.",
           "output": """
-            1.Texto: "O aluno forneceu um algoritmo que cobre todas as etapas do problema."
+            1. Texto: "O aluno forneceu um algoritmo que cobre todas as etapas do problema."
 
-            2.Trechos de Código: Marcar as partes do código que representam o início, meio e fim da solução.
+            2. Trechos de Código: Marcar as partes do código que representam o início, meio e fim da solução.
             
-            3.Nota:
+            3. Nota:
 
               - Não se aplica
               - Nenhum indício
@@ -52,11 +52,11 @@ config: Dict[str, Any] = {
           "title": "O aluno detalhou as instruções no código por meio de comentários e explicações.",
           "detection": "Verificar se há comentários no código que expliquem claramente o que cada trecho de código faz.",
           "output": """
-            1.Texto: "O aluno detalhou as instruções através de comentários no código."
+            1. Texto: "O aluno detalhou as instruções através de comentários no código."
 
-            2.Trechos de Código: Marcar os comentários que fornecem explicações detalhadas.
+            2. Trechos de Código: Marcar os comentários que fornecem explicações detalhadas.
             
-            3.Nota:
+            3. Nota:
             
               - Não se aplica
               - Nenhum indício
@@ -70,11 +70,11 @@ config: Dict[str, Any] = {
           "title": "O código contém instruções detalhadas que permitem entender claramente cada passo da solução.",
           "detection": "Verificar se as instruções no código são claras e detalhadas, facilitando a compreensão do processo.",
           "output": """
-            1.Texto: "O aluno forneceu instruções detalhadas que facilitam o entendimento do código."
+            1. Texto: "O aluno forneceu instruções detalhadas que facilitam o entendimento do código."
             
-            2.Trechos de Código: Marcar as partes do código que contêm as instruções detalhadas.
+            2. Trechos de Código: Marcar as partes do código que contêm as instruções detalhadas.
             
-            3.Nota:
+            3. Nota:
               
               - Não se aplica
               - Nenhum indício
@@ -93,11 +93,11 @@ config: Dict[str, Any] = {
           "title": "O código resolve todos os requisitos e funcionalidades descritos no desafio.",
           "detection": "Verificar se o código aborda todos os requisitos especificados no problema.",
           "output": """
-            1.Texto: "O aluno implementou uma solução que resolve todos os requisitos do desafio."
+            1. Texto: "O aluno implementou uma solução que resolve todos os requisitos do desafio."
             
-            2.Trechos de Código: Marcar as partes do código que correspondem a cada requisito.
+            2. Trechos de Código: Marcar as partes do código que correspondem a cada requisito.
             
-            3.Nota:
+            3. Nota:
               - Não se aplica
               - Nenhum indício
               - Baixo: A solução está incompleta e não atende aos principais requisitos.
@@ -110,11 +110,11 @@ config: Dict[str, Any] = {
           "title": "O código lida com todas as possíveis entradas e cenários previstos no desafio.",
           "detection": "Verificar se a solução lida adequadamente com todos os tipos de entrada, incluindo cenários normais e excepcionais.",
           "output": """
-            1.Texto: "O aluno implementou uma solução completa que lida com todos os cenários previstos."
+            1. Texto: "O aluno implementou uma solução completa que lida com todos os cenários previstos."
             
-            2.Trechos de Código: Marcar as partes do código que tratam entradas variadas ou exceções.
+            2. Trechos de Código: Marcar as partes do código que tratam entradas variadas ou exceções.
             
-            3.Nota:
+            3. Nota:
               
               - Não se aplica
               - Nenhum indício
@@ -133,11 +133,11 @@ config: Dict[str, Any] = {
           "title": "O código utiliza corretamente estruturas de condição (if, else) e repetição (loops) de forma diferenciada.",
           "detection": "Verificar se o aluno aplicou corretamente estruturas de condição para decisões e estruturas de repetição para ações repetitivas.",
           "output": """
-            1.Texto: "O aluno reconheceu a diferença entre estruturas de condição e repetição e as aplicou corretamente."
+            1. Texto: "O aluno reconheceu a diferença entre estruturas de condição e repetição e as aplicou corretamente."
             
-            2.Trechos de Código: Marcar os trechos que usam corretamente condicionais e loops.
+            2. Trechos de Código: Marcar os trechos que usam corretamente condicionais e loops.
             
-            3.Nota:
+            3. Nota:
               
               - Não se aplica
               - Nenhum indício
@@ -151,11 +151,11 @@ config: Dict[str, Any] = {
           "title": "O aluno diferenciou corretamente entre quando usar uma estrutura condicional e quando usar uma estrutura de repetição.",
           "detection": "Analisar se o código demonstra uma compreensão clara de quando é apropriado usar condicionais ou loops.",
           "output": """
-            1.Texto: "O aluno diferenciou corretamente entre o uso de estruturas condicionais e de repetição."
+            1. Texto: "O aluno diferenciou corretamente entre o uso de estruturas condicionais e de repetição."
             
-            2.Trechos de Código: Marcar as áreas que demonstram o uso apropriado de cada estrutura.
+            2. Trechos de Código: Marcar as áreas que demonstram o uso apropriado de cada estrutura.
             
-            3.Nota:
+            3. Nota:
               
               - Não se aplica
               - Nenhum indício
@@ -174,11 +174,11 @@ config: Dict[str, Any] = {
           "title": "O aluno utilizou adequadamente estruturas de repetição (loops) com condições de saída (break, continue, etc.).",
           "detection": "Verificar se o aluno controla corretamente a execução de loops utilizando condições de parada ou iteração controlada.",
           "output": """
-            1.Texto: "O aluno controlou adequadamente as repetições utilizando condições de saída ou iteração controlada."
+            1. Texto: "O aluno controlou adequadamente as repetições utilizando condições de saída ou iteração controlada."
             
-            2.Trechos de Código: Marcar os loops que demonstram controle correto de repetições.
+            2. Trechos de Código: Marcar os loops que demonstram controle correto de repetições.
             
-            3.Nota:
+            3. Nota:
               
               - Não se aplica
               - Nenhum indício
@@ -192,11 +192,11 @@ config: Dict[str, Any] = {
           "title": "O código utiliza corretamente estruturas condicionais para controlar fluxos alternativos no algoritmo.",
           "detection": "Verificar se o código faz uso eficiente de condicionais para decidir o fluxo de execução baseado em diferentes condições.",
           "output": """
-            1.Texto: "O aluno utilizou condicionais para controlar o fluxo de execução de maneira eficiente."
+            1. Texto: "O aluno utilizou condicionais para controlar o fluxo de execução de maneira eficiente."
             
-            2.Trechos de Código: Marcar as áreas onde as estruturas condicionais controlam o fluxo do algoritmo.
+            2. Trechos de Código: Marcar as áreas onde as estruturas condicionais controlam o fluxo do algoritmo.
             
-            3.Nota:
+            3. Nota:
               
               - Não se aplica
               - Nenhum indício

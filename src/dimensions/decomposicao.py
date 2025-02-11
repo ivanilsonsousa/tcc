@@ -11,7 +11,7 @@ config: Dict[str, Any] = {
           "title": "Identificação de funções ou métodos separados, verificação se cada um resolve uma parte específica do problema.",
           "detection": "Analisar se o código contém funções/métodos independentes, cada um com um nome que sugere uma responsabilidade específica, alinhada com a divisão do problema em partes menores.",
           "output": """
-            1. Texto: "O aluno utilizou funções para dividir o desafio em sub-desafios." (ou algo do gênero) 
+            1. Texto: "O aluno utilizou funções para dividir o desafio em sub-desafios." 
 
             2. Trechos de Código: Marcar as funções/métodos (informar o quantitativo de funções/métodos, caso exista) específicos que representam sub-desafios. 
 

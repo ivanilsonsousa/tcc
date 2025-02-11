@@ -62,8 +62,10 @@ class Engine:
 
                 Detecção: {clue['detection']}
 
-                Saídas: (O que me deve retornar EXATAMENTE OS CAMPOS ABAIXO)
+                Saídas: (O que deve retornar como sáida os pontos de 1 a 3 com as saídas mais apropriadas para cada input)
 
+                Atenção: Para a saída "1. Texto: ..." pode ser a negativa do texto exemplo (ou um texto mais apropriado), caso o aluno não tenha satisfeito o indício proposto
+                
                 {clue['output']}
                 """
       self.ai.add_role(type="system", content=prompt)

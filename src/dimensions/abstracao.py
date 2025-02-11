@@ -11,7 +11,7 @@ config: Dict[str, Any] = {
           "title": "O aluno forneceu uma introdução clara e completa ao problema no código ou nos comentários.",
           "detection": "Verificar se há uma explicação inicial, seja no cabeçalho do código ou em comentários, que contextualiza o desafio e explica sua importância.",
           "output": """
-            1. Texto: "O aluno apresentou uma contextualização clara do desafio." (ou algo do gênero) 
+            1. Texto: "O aluno apresentou uma contextualização clara do desafio."
 
             2. Trechos de Código: Marcar o comentário ou seção que fornece a contextualização. 
 

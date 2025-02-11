@@ -1,10 +1,5 @@
 # Guia
 
-git clone em "https://github.com/ivanilsonsousa/tcc.git"
-```bash
-git clone https://github.com/ivanilsonsousa/tcc.git
-```
-
 entrar na pasta tcc
 ```bash
 cd tcc
