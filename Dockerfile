@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
+    apt-get install -y python3 python3-pip python3-venv && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -12,3 +12,9 @@ WORKDIR /app
 
 # Mantém o contêiner rodando indefinidamente
 CMD ["tail", "-f", "/dev/null"]
+
+# docker run -d --name meu-container-python -v "$(pwd)":/app meu-python-dev
+
+# docker exec -it meu-container-python bash
+
+# python3 -m venv .venv
