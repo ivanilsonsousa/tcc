@@ -43,6 +43,10 @@ export const stepThreeSchema = z.object({
     ),
 });
 
+export const stepConfirmSchema = z.object({
+  llm: z.enum(['gpt', 'ollama', 'gemini', 'deepseek']),
+});
+
 export const fullFormSchema = stepOneSchema
   .merge(stepTwoSchema)
   .merge(stepThreeSchema);
@@ -50,5 +54,6 @@ export const fullFormSchema = stepOneSchema
 export type StepOneData = z.infer<typeof stepOneSchema>;
 export type StepTwoData = z.infer<typeof stepTwoSchema>;
 export type StepThreeData = z.infer<typeof stepThreeSchema>;
+export type StepConfirmData = z.infer<typeof stepConfirmSchema>;
 
 export type CombinedFormData = StepOneData & StepTwoData & StepThreeData;
