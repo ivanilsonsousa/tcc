@@ -13,7 +13,11 @@ WORKDIR /app
 # Mantém o contêiner rodando indefinidamente
 CMD ["tail", "-f", "/dev/null"]
 
-# docker run -d --name meu-container-python -v "$(pwd)":/app meu-python-dev
+# configiguração
+
+# docker build -t meu-python-dev .
+
+# docker run -d --name meu-container-python -v "$(pwd)":/app -p 8000:8000 meu-python-dev
 
 # docker exec -it meu-container-python bash
 
