@@ -18,3 +18,9 @@ CMD ["tail", "-f", "/dev/null"]
 # docker exec -it meu-container-python bash
 
 # python3 -m venv .venv
+
+# source .venv/bin/activate
+
+# pip install -r requirements.txt 
+
+# pip install pip-autoremove
