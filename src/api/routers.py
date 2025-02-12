@@ -1,5 +1,5 @@
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Depends
-from ..core import Engine, OpenaiModel, OllamaModel, GeminiModel, save_md_file, get_absolute_path
+from ..core import Engine, OpenaiModel, OllamaModel, GeminiModel, DeepSeekModel, save_md_file, get_absolute_path
 from ..dimensions import dimensions as base_dimensions
 from pydantic import BaseModel
 from typing import List
@@ -45,6 +45,7 @@ async def submit_challenge(
     ai = OpenaiModel()
     # ai = OllamaModel()
     # ai = GeminiModel()
+    # ai = DeepSeekModel()
     engine = Engine(ai)
     
     documentation = engine.make_documentation(general_context=general_context)
