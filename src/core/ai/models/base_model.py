@@ -25,3 +25,19 @@ class BaseModel(AIInterface):
   
   def show(self):
     print("implementar show...")
+
+  def messages_as_text(self) -> str:
+    """
+    Retorna as mensagens em formato de string, no estilo:
+        system: <conteúdo>
+        
+        user: <conteúdo>
+        
+        system: <conteúdo>
+        ...
+    """
+    lines = []
+    for msg in self.messages:
+      lines.append(f"{msg['role']}: {msg['content']}")
+    # Adiciona uma linha em branco entre cada mensagem
+    return "\n\n".join(lines)
