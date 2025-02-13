@@ -27,18 +27,16 @@ async def submit_challenge(
     - files: arquivos com o código enviado
   """
 
-  # 2. Lê todo o conteúdo dos arquivos enviados
+  # Lê todo o conteúdo dos arquivos enviados
   code_text = ""
   for file in files:
     content = await file.read()
     code_text += content.decode("utf-8") + "\n"
 
-  # 3. Seleciona o modelo LLM
+  # Seleciona o modelo LLM
   ai_model = get_llm_model(llm)
 
-  print(ai_model);
-
-  # 4. Processa e retorna a resposta
+  # Processa e retorna a resposta
   result = process_challenge_submission(general_context, code_text, dimensions, ai_model)
   return {"output": result}
 

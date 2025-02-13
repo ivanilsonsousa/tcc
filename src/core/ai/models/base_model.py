@@ -21,7 +21,7 @@ class BaseModel(AIInterface):
     self.messages = self.base_messages.copy()
 
   def chat(self) -> str:
-    return "impletar chat..."
+    return "implementar chat..."
   
   def show(self):
     print("implementar show...")
